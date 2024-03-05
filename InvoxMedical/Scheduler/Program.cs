@@ -1,12 +1,12 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Coravel;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using NCrontab.Scheduler.Extensions;
 using System.IO;
 using System.Threading.Tasks;
 
-class Program
+public class Program
 {
     public static async Task Main(string[] args)
     {
@@ -27,12 +27,24 @@ class Program
             })
             .ConfigureServices((hostContext, services) =>
             {
+
                 services.AddScheduler();
-                services.AddScoped<IHostedService, TimedHostedService>();
+                services.AddTransient<MyFirstInvocable>();
+                
                 // Here goes your internal application dependencies
                 // like EntityFramework context, worker, endpoint, etc.
             });
 
-        await hostBuilder.RunConsoleAsync();
+        IHost host = hostBuilder.Build();
+
+        host.Services.UseScheduler(scheduler =>
+        {  
+            // Yes, it's this easy!
+            scheduler
+                .Schedule<MyFirstInvocable>()
+                .EveryFiveSeconds();
+        });
+
+        await host.RunAsync();
     }
 }
