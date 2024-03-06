@@ -28,7 +28,7 @@ public class Program
             .ConfigureServices((hostContext, services) =>
             {
                 IConfiguration config = hostContext.Configuration;
-                config.g
+                //config.g
                 //services.AddSingleton<IEndpointConfiguration>(serviceProvider =>
                 //{
                 //    return hostContext.Configuration.GetSection("EndpointConfiguration").Get<EndpointConfiguration>();
@@ -47,7 +47,7 @@ public class Program
             // Yes, it's this easy!
             scheduler
                 .Schedule<MyFirstInvocable>()
-                .Cron()
+                //.Cron()
                 .DailyAt(hour: 00, minute: 00);
                 
         });
