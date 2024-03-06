@@ -27,7 +27,12 @@ public class Program
             })
             .ConfigureServices((hostContext, services) =>
             {
-
+                IConfiguration config = hostContext.Configuration;
+                config.g
+                //services.AddSingleton<IEndpointConfiguration>(serviceProvider =>
+                //{
+                //    return hostContext.Configuration.GetSection("EndpointConfiguration").Get<EndpointConfiguration>();
+                //});
                 services.AddScheduler();
                 services.AddTransient<MyFirstInvocable>();
                 
@@ -38,11 +43,13 @@ public class Program
         IHost host = hostBuilder.Build();
 
         host.Services.UseScheduler(scheduler =>
-        {  
+        {
             // Yes, it's this easy!
             scheduler
                 .Schedule<MyFirstInvocable>()
-                .EveryFiveSeconds();
+                .Cron()
+                .DailyAt(hour: 00, minute: 00);
+                
         });
 
         await host.RunAsync();
