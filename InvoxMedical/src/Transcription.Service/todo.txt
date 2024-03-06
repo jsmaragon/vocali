@@ -1,0 +1,4 @@
+Add controller for MedicalRecords 
+Add post with return type transcription.
+Add limit 4 text responses round robbin. Aleatorio de 1 a 4
+Add limit of 5% generic error .. de cada 100 peticiones, 20.. de cada 10, 2.. 

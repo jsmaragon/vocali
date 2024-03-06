@@ -34,7 +34,7 @@ public class Program
                 //    return hostContext.Configuration.GetSection("EndpointConfiguration").Get<EndpointConfiguration>();
                 //});
                 services.AddScheduler();
-                services.AddTransient<MyFirstInvocable>();
+                services.AddTransient<MedicalRecordUploader>();
                 
                 // Here goes your internal application dependencies
                 // like EntityFramework context, worker, endpoint, etc.
@@ -46,7 +46,7 @@ public class Program
         {
             // Yes, it's this easy!
             scheduler
-                .Schedule<MyFirstInvocable>()
+                .Schedule<MedicalRecordUploader>()
                 //.Cron()
                 .DailyAt(hour: 00, minute: 00);
                 
