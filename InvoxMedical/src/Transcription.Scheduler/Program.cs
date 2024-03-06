@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 public class Program
 {
+    private static string _cronExpression; 
     public static async Task Main(string[] args)
     {
+        
         var hostBuilder = new HostBuilder()
             .ConfigureAppConfiguration((hostContext, configBuilder) =>
             {
@@ -27,9 +29,9 @@ public class Program
             })
             .ConfigureServices((hostContext, services) =>
             {
-                IConfiguration config = hostContext.Configuration;
-                //config.g
-                //services.AddSingleton<IEndpointConfiguration>(serviceProvider =>
+                //IConfiguration config = hostContext.Configuration;
+                //_cronExpression = config.GetValue<string>("Schedule");
+                ////services.AddSingleton<IEndpointConfiguration>(serviceProvider =>
                 //{
                 //    return hostContext.Configuration.GetSection("EndpointConfiguration").Get<EndpointConfiguration>();
                 //});
@@ -41,14 +43,17 @@ public class Program
             });
 
         IHost host = hostBuilder.Build();
-
+        
+       
+        var config = host.Services.GetService<IConfiguration>();
+        var cronExpression = config["Schedule"];
         host.Services.UseScheduler(scheduler =>
         {
             // Yes, it's this easy!
             scheduler
                 .Schedule<MedicalRecordUploader>()
-                //.Cron()
-                .DailyAt(hour: 00, minute: 00);
+                .Cron(cronExpression);
+                //.DailyAt(hour: 00, minute: 00);
                 
         });
 
