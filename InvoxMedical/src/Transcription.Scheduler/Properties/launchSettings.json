@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Transcription.Scheduler": {
+      "commandName": "Project"
+    },
+    "Transcription.Scheduler.Debug": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "Environment": "Development"
+      }
+    }
+  }
+}

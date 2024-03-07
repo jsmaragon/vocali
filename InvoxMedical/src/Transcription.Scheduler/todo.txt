@@ -1,4 +1,5 @@
-﻿Add cron expression to configure from appsettings.
-Add directory for mp3 in settings.
+﻿Add cron expression to configure from appsettings. DONE
+Add directory for mp3 in settings. DONE
+Add Serilog to file
 Add Polly to fulfill : "Si una petición devuelve un error, la repite hasta un máximo de 3 veces."
 Add task limit to 3 simultaneous requests.
